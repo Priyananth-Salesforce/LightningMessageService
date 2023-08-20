@@ -1,0 +1,38 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <lightning:messageChannel type="messageMedium__c" onMessage="{!c.handleMessage}" scope="APPLICATION" aura:id="messageMedium"/>
+    <aura:attribute name="messageList" type="Object[]" />
+    <aura:attribute name="messageText" type="String" />
+    <lightning:card  title="AURA">
+        <div class="slds-p-horizontal_small">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem padding="around-small" size="12" class="slds-scrollable customHeight" >
+                    <aura:iteration items="{!v.messageList}" var="message">
+                        <section role="log" class="slds-chat">
+                            <ul class="slds-chat-list">
+                                <li class="{!message.messageType == 'Inbound' ? 'slds-chat-listitem slds-chat-listitem_inbound' : 'slds-chat-listitem slds-chat-listitem_outbound'}">
+                                    <div class="slds-chat-message">
+                                        <div class="slds-chat-message__body">
+                                            <div class="{!message.messageType == 'Inbound' ? 'slds-chat-message__text slds-chat-message__text_inbound' : 'slds-chat-message__text slds-chat-message__text_outbound'}">
+                                                <span>{!message.message}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </aura:iteration>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem padding="around-small" size="10">
+                    <span onkeypress="{!c.handleEnter}">
+                        <lightning:input type="text" label="Enter some text" value="{!v.messageText}" placeholder="Write here." variant="label-hidden"></lightning:input>
+                    </span>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                    <lightning:button variant="success" label="Send" title="Successful action" onclick="{!c.sendMessage}" class="slds-m-left_x-small"></lightning:button>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </lightning:card>
+</aura:component>

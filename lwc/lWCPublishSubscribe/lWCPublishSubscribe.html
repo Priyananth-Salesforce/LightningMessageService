@@ -1,0 +1,33 @@
+<template>
+    <lightning-card  title="LWC">
+        <div class="slds-p-horizontal_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" class="slds-scrollable" style="height:15rem;" >
+                    <template for:each={messageList} for:item="message" for:index="index">
+                        <section role="log" class="slds-chat" key={message}>
+                            <ul class="slds-chat-list">
+                                <li class={message.messageTypeList}>
+                                    <div class="slds-chat-message">
+                                        <div class="slds-chat-message__body">
+                                            <div class={message.messageTypeText}>
+                                                <span>{message.message}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="10">
+                    <lightning-input type="text" label="Enter some text" value={messageText} onkeypress={handleEnter} placeholder="Write here." variant="label-hidden" onchange={handleMessageText}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <lightning-button variant="success" label="Send" title="Successful action" onclick={sendMessage} class="slds-m-left_x-small"></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>
